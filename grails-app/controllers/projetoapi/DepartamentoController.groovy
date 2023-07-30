@@ -8,6 +8,7 @@ class DepartamentoController {
 
     def departamentoService
 
+
     def index() {
         def departamentos = departamentoService.listarDepartamentos()
         render departamentos as JSON

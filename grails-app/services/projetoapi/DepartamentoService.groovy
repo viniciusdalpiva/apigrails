@@ -20,7 +20,7 @@ class DepartamentoService {
 
     def atualizarDepartamento(Long id, Map departamentoData) {
         def departamento = Departamento.get(id)
-        departamento.properties = departamentoData as BindingResult
+        departamento.properties = departamentoData// as BindingResult
         departamento.save()
         departamento
     }
