@@ -11,15 +11,5 @@ class Departamento {
     String nome
 
     static hasMany = [empregados: Empregado]
-
-    static {
-        JSON.registerObjectMarshaller(LocalDate) { LocalDate date ->
-            date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-        }
-    }
-
-    String toJson() {
-        new JsonBuilder(this).toString()
-    }
 }
 

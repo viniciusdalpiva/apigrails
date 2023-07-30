@@ -8,14 +8,37 @@ class EmpregadoController {
 
     def empregadoService
 
+//    def index() {
+//        def empregados = empregadoService.listarEmpregados()
+//        render empregados as JSON
+//    }
+
+    // altera a ordem de apresentacao do get
     def index() {
         def empregados = empregadoService.listarEmpregados()
-        render empregados as JSON
+        def listaFormatada = empregados.collect { empregado ->
+            [
+                    id: empregado.id,
+                    matricula: empregado.matricula,
+                    nome: empregado.nome,
+                    dataNascimento: empregado.dataNascimento,
+                    departamento: empregado.departamento.id
+            ]
+        }
+        render listaFormatada as JSON
     }
+
 
     def show(Long id) {
         def empregado = empregadoService.buscarEmpregadoPorId(id)
-        render empregado as JSON
+        def empregadoFormatado = [
+                id: empregado.id,
+                matricula: empregado.matricula,
+                nome: empregado.nome,
+                dataNascimento: empregado.dataNascimento,
+                departamento: empregado.departamento.id
+        ]
+        render empregadoFormatado as JSON
     }
 
     def save() {

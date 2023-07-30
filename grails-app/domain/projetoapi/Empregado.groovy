@@ -10,7 +10,8 @@ class Empregado {
     String nome
     LocalDate dataNascimento
     Integer matricula
-    //Departamento departamento
+    Departamento departamento
+
 
     static belongsTo = [departamento: Departamento]
     static {
@@ -18,6 +19,10 @@ class Empregado {
             date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         }
     }
+
+//    static mapping = {
+//        id generator: 'identity'
+//    }
 
     static constraints = {
         nome blank: false

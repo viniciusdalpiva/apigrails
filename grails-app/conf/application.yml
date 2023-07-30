@@ -90,4 +90,4 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 
-# Outras configurações que possam existir abaixo...
+

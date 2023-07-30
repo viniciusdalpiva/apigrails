@@ -12,7 +12,7 @@ class EmpregadoService {
 
     def criarEmpregado(Map empregadoData) {
         def empregado = new Empregado(empregadoData)
-        
+
         empregado.save()
         empregado
     }
