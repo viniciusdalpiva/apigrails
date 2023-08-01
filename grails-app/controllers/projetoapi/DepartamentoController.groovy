@@ -20,9 +20,13 @@ class DepartamentoController {
     }
 
     def save() {
-        def departamentoData = request.JSON
-        def departamento = departamentoService.criarDepartamento(departamentoData)
-        render departamento as JSON
+        try {
+            def departamentoData = request.JSON
+            def departamento = departamentoService.criarDepartamento(departamentoData)
+            render departamento as JSON
+        } catch (IllegalArgumentException e) {
+            render(status: 400, message: e.message)
+        }
     }
 
     def update(Long id) {

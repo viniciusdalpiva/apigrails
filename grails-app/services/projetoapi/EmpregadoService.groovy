@@ -2,31 +2,56 @@ package projetoapi
 
 class EmpregadoService {
 
-    def listarEmpregados() {
-        Empregado.list()
+    def listarEmpregadosFormatted() {
+        Empregado.list().collect { empregado ->
+            formatEmpregado(empregado)
+        }
     }
 
-    def buscarEmpregadoPorId(Long id) {
-        Empregado.get(id)
+    def buscarEmpregadoFormatadoPorId(Long id) {
+        def empregado = Empregado.get(id)
+        formatEmpregado(empregado)
     }
 
     def criarEmpregado(Map empregadoData) {
+        validarDadosObrigatorios(empregadoData)
         def empregado = new Empregado(empregadoData)
 
         empregado.save()
-        empregado
+        formatEmpregado(empregado)
     }
 
     def atualizarEmpregado(Long id, Map empregadoData) {
+        validarDadosObrigatorios(empregadoData)
         def empregado = Empregado.get(id)
         empregado.properties = empregadoData
         empregado.save()
-        empregado
+        formatEmpregado(empregado)
     }
 
     def excluirEmpregado(Long id) {
         def empregado = Empregado.get(id)
         empregado.delete()
-        empregado
+        formatEmpregado(empregado)
+    }
+
+    private formatEmpregado(empregado) {
+        [
+                id: empregado.id,
+                matricula: empregado.matricula,
+                nome: empregado.nome,
+                dataNascimento: empregado.dataNascimento,
+                departamento: empregado.departamento.id
+        ]
+    }
+
+    private validarDadosObrigatorios(Map empregadoData) {
+        def requiredFields = ['nome', 'matricula', 'dataNascimento', 'departamento']
+        def missingFields = requiredFields.findAll { !empregadoData.containsKey(it) }
+
+        if (missingFields) {
+            def missingFieldsStr = missingFields.join(', ')
+            throw new IllegalArgumentException("Não foi possível incluir o empregado, campo(s) '${missingFieldsStr}' não foi(foram) preenchido(s).")
+        }
     }
 }
